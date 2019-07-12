@@ -1,0 +1,96 @@
+<?xml version="1.0"?>
+<!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 7.2.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_7_2_0.dtd">
+
+<service-builder dependency-injector="ds" package-path="com.liferay.training.gradebook">
+	<namespace>Gradebook</namespace>
+    <entity name="Assignment" local-service="true" uuid="true">
+        <!-- PK fields -->
+
+    	<column name="assignmentId" primary="true" type="long"></column>
+
+    	<!-- Group instance -->
+
+    	<column name="groupId" type="long"></column>
+
+    	<!-- Audit fields -->
+
+    	<column name="companyId" type="long"></column>
+    	<column name="userId" type="long"></column>
+    	<column name="userName" type="String"></column>
+    	<column name="createDate" type="Date"></column>
+    	<column name="modifiedDate" type="Date"></column>
+    	
+        <column name="title" type="String" localized="true"></column>
+        <column name="description" type="String"></column>
+        <column name="dueDate" type="Date"></column>
+        <column name="status" type="int"></column>
+        <column name="statusByUserId" type="long"></column>
+        <column name="statusByUserName" type="String"></column>
+        <column name="statusDate" type="Date"></column>
+        
+        <finder name="GroupId" return-type="Collection">
+            <finder-column name="groupId"></finder-column>
+        </finder>
+        <finder name="Status" return-type="Collection">
+            <finder-column name="status"></finder-column>
+        </finder>
+        <finder name="G_S" return-type="Collection">
+            <finder-column name="groupId"></finder-column>
+            <finder-column name="status"></finder-column>
+        </finder>
+        
+        <reference entity="Group" package-path="com.liferay.portal"></reference>
+        <reference entity="AssetEntry" package-path="com.liferay.portlet.asset"></reference>
+        <reference entity="AssetTag" package-path="com.liferay.portlet.asset"></reference>
+        <reference entity="AssetLink" package-path="com.liferay.portlet.asset"></reference>
+        <reference entity="WorkflowInstanceLink" package-path="com.liferay.portal"></reference>
+        
+    </entity>
+    <entity name="Submission" local-service="true">
+
+    	<!-- PK fields -->
+
+    	<column name="submissionId" primary="true" type="long"></column>
+
+    	<!-- Group instance -->
+
+    	<column name="groupId" type="long"></column>
+
+    	<!-- Audit fields -->
+
+    	<column name="companyId" type="long"></column>
+    	<column name="userId" type="long"></column>
+    	<column name="userName" type="String"></column>
+    	<column name="createDate" type="Date"></column>
+    	<column name="modifiedDate" type="Date"></column>
+    	
+        <column name="studentId" type="long"></column>
+        <column name="submitDate" type="Date"></column>
+        <column name="submissionText" type="String"></column>
+        <column name="comment" type="String"></column>
+        <column name="grade" type="int"></column>
+        <column name="assignmentId" type="long"></column>
+        
+        <finder name="GroupId" return-type="Collection">
+            <finder-column name="groupId"></finder-column>
+        </finder>
+        <finder name="G_A" return-type="Collection">
+            <finder-column name="groupId"></finder-column>
+            <finder-column name="assignmentId"></finder-column>
+        </finder>
+        <finder name="StudentId" return-type="Collection">
+            <finder-column name="studentId"></finder-column>
+        </finder>
+        <finder name="StudentIdAssignmentId" return-type="Collection">
+            <finder-column name="studentId"></finder-column>
+            <finder-column name="assignmentId"></finder-column>
+        </finder>
+        <reference entity="AssetEntry" package-path="com.liferay.portlet.asset"></reference>
+        <reference entity="AssetTag" package-path="com.liferay.portlet.asset"></reference>
+        
+    </entity>
+    <exceptions>
+        <exception>AssignmentValidation</exception>
+        <exception>SubmissionValidation</exception>
+    </exceptions>
+</service-builder>
